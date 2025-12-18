@@ -4,15 +4,6 @@ from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.exceptions import OutputParserException
 from llm_helper import llm
 
-def sanitize_text(text):
-    """
-    Removes surrogate characters (broken emojis) that cause UnicodeEncodeError.
-    """
-    if not isinstance(text, str):
-        return text
-    # This encodes the text to utf-8, ignoring any errors (bad characters), 
-    # and then decodes it back to a clean string.
-    return text.encode('utf-8', 'ignore').decode('utf-8')
 
 def process_posts(raw_file_path, processed_file_path="data/processed_posts.json"):
     with open(raw_file_path, encoding='utf-8') as file:
