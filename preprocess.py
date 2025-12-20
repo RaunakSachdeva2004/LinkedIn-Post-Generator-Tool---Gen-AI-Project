@@ -66,6 +66,8 @@ def get_unified_tags(posts_with_metadata):
     
 
 def extract_metadata(post):
+    if isinstance(post, str):
+        post = post.encode('utf-8', 'ignore').decode('utf-8')
     # Extract metadata from the text
     template = '''
         You are given a LinkedIn post. You need to extract number of lines, language of the post and tags.
