@@ -19,7 +19,7 @@ def main():
     tags = fs.get_tags()
     with col1:
         # Dropdown for Topic (Tags)
-        selected_tag = st.selectbox("Topic", options = [tags])
+        selected_tag = st.selectbox("Topic", options = tags) # type: ignore
 
     with col2:
         # Dropdown for Length
