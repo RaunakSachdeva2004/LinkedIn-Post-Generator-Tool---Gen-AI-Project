@@ -15,11 +15,13 @@ def process_posts(raw_file_path, processed_file_path="data/processed_posts.json"
             enriched_posts.append(post_with_metadata)
 
 
-    unified_tags =  get_unified_tags(enriched_posts)
+    unified_tags = get_unified_tags(enriched_posts)
 
     for post in enriched_posts:
-        current_tags = post['tags']
-        new_tags = {unified_tags[tag] for tag in current_tags}
+        current_tags = post.get('tags', []) # Use .get() in case a post failed metadata extraction
+        
+        # SAFER MAPPING:
+        new_tags = {unified_tags.get(tag, tag) for tag in current_tags}
         post['tags'] = list(new_tags)
 
     with open(processed_file_path, encoding='utf-8', mode="w") as outfile:
@@ -33,7 +35,7 @@ def get_unified_tags(posts_with_metadata):
     for post in posts_with_metadata:
         unique_tags.update(post['tags'])  # Add the tags to the set
     
-    unique_tags_list = ','.join(unique_tags)
+    unique_tags_list = json.dumps(list(unique_tags)) 
 
     template = '''I will give you a list of tags. You need to unify tags with the following requirements,
     1. Tags are unified and merged to create a shorter list. 
