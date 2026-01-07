@@ -4,4 +4,4 @@ langchain-core
 langchain-community
 langchain-ollama
 pandas
-langchian-groq
+langchain-groq
